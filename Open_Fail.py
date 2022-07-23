@@ -30,8 +30,8 @@ def get_shop_list_by_dishes(dishes, person_count):
 
 
 ROOT_PATH = os.getcwd()
-FILE_DIR = 'sorted'
-directory = r'D:\Netology\Home_Work_Open_File\sorted'
+FILE_DIR = '123.txt'
+directory = r'D:\Netology\Home_Work_Open_File\123.txt'
 files = os.listdir(directory)
 texts = filter(lambda x: x.endswith('.txt'), files)
 dict_ = {}
