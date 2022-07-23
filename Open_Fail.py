@@ -52,6 +52,7 @@ def rewriting(file_for_writing: str, base_path, location):
 
 pprint(cook_book)
 pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 3))
+open("123.txt", "w", encoding="UTF-8")
 file_for_writing = os.path.abspath('123.txt')
 base_path = os.getcwd()
 location = os.path.abspath('txts_for_Opening and reading a file, writing to a file')
