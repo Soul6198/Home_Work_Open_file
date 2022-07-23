@@ -28,33 +28,31 @@ def get_shop_list_by_dishes(dishes, person_count):
                     client_list[value.pop('ingredient_name')] = value
     return client_list
 
+def strings_counting(file:str) -> int:
+    with open(file, 'r', encoding="UTF-8") as f:
+        return sum(1 for _ in f)
 
-ROOT_PATH = os.getcwd()
-FILE_DIR = '123.txt'
-directory = r'D:\Netology\Home_Work_Open_File\123.txt'
-files = os.listdir(directory)
-texts = filter(lambda x: x.endswith('.txt'), files)
-dict_ = {}
-for file in texts:
-    path_ = os.path.join(ROOT_PATH, FILE_DIR, file)
-    with open(path_, encoding='utf-8') as text:
-        message = []
-        for strings in text:
-            message.append(strings.strip())
-            lens = len(message)
-        dict_[file] = [len(message), message]
-sorted_list = sorted(dict_.items(), key=lambda item: item[1])
-
-
-with open('Mord.txt', 'w+', encoding='utf-8') as f:
-    for level_1 in sorted_list:
-        f.write(f'{level_1[0]}\n')
-        f.write(f'{level_1[1][0]}\n')
-        for level_2 in level_1[1][1]:
-            line = ''.join(str(x) for x in level_2)
-            f.write(f'{line}\n')
-
+def rewriting(file_for_writing: str, base_path, location):
+    files = []
+    for i in list(os.listdir(os.path.join(base_path, location))):
+        arr = [strings_counting(os.path.join(base_path, location, i)), os.path.join(base_path, location, i), i]
+        files.append(arr)
+    for file_from_list in sorted(files):
+        opening_files = open(file_for_writing, 'a', encoding="UTF-8")
+        opening_files.write(f'{file_from_list[2]}\n')
+        opening_files.write(f'{file_from_list[0]}\n')
+        with open(file_from_list[1], 'r', encoding="UTF-8") as file:
+            counting = 1
+            for line in file:
+                opening_files.write(f'line in № {counting} in file {file_from_list[2]} : {line}')
+                counting += 1
+        opening_files.write(f'\n')
+        opening_files.close()
 
 
 pprint(cook_book)
 pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 3))
+file_for_writing = os.path.abspath('123.txt')
+base_path = os.getcwd()
+location = os.path.abspath('txts_for_Opening and reading a file, writing to a file')
+rewriting(file_for_writing, base_path, location)
