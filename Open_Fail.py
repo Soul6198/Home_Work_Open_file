@@ -28,42 +28,31 @@ def get_shop_list_by_dishes(dishes, person_count):
                     client_list[value.pop('ingredient_name')] = value
     return client_list
 
-list_of_files = ['1.txt', '2.txt', '3.txt']
+
+ROOT_PATH = os.getcwd()
+FILE_DIR = 'sorted'
+directory = r'D:\Netology\Home_Work_Open_File\sorted'
+files = os.listdir(directory)
+texts = filter(lambda x: x.endswith('.txt'), files)
+dict_ = {}
+for file in texts:
+    path_ = os.path.join(ROOT_PATH, FILE_DIR, file)
+    with open(path_, encoding='utf-8') as text:
+        message = []
+        for strings in text:
+            message.append(strings.strip())
+            lens = len(message)
+        dict_[file] = [len(message), message]
+sorted_list = sorted(dict_.items(), key=lambda item: item[1])
 
 
-def documents_reader(list_of_files) -> dict:
-  content = {}
-  name_f = {}
-  for values in list_of_files:
-    with open(values) as file:
-      list_of_sting = []
-      for line in file:
-        list_of_sting.append(line.strip())
-    name_f[len(list_of_sting)] = values
-    content[len(list_of_sting)] = list_of_sting
-  return [content, name_f]
-
-new_file = '123.txt'
-list_d = documents_reader(list_of_files)
-
-def documents_writer(new_file, list_d):
-    sort_content = {}
-    content = list_d[0]
-    name_f = list_d[1]
-    with open(new_file, "w+") as file:
-        sorted_keys = sorted(content, key=content.get)
-        sorted_keys.reverse()
-        for values in sorted_keys:
-            sort_content[values] = content[values]
-        for keys, items in sort_content.items():
-            for key_name, value_name in name_f.items():
-                if key_name == keys:
-                    file.write(f'Название файла: {value_name} \n')
-            file.write(f'Количество строк: {str(keys)} \n')
-            for sttri in items:
-                file.write(f'{sttri} \n')
-            file.write('\n')
-print(documents_writer(new_file, list_d))
+with open('Mord.txt', 'w+', encoding='utf-8') as f:
+    for level_1 in sorted_list:
+        f.write(f'{level_1[0]}\n')
+        f.write(f'{level_1[1][0]}\n')
+        for level_2 in level_1[1][1]:
+            line = ''.join(str(x) for x in level_2)
+            f.write(f'{line}\n')
 
 
 
